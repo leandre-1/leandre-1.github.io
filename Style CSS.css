@@ -1,0 +1,35 @@
+img{
+    width: 20%
+}
+body{
+    background-color: #DADCDE;
+}
+h1{
+    color: red;
+    text-align: center;
+    font-size: 34px
+}
+#milieu{
+    text-align: center;
+}
+#police{
+    font-family: comic sans ms ; 
+    font-size: 150%;
+}
+#droite{
+    position: absolute;
+    top: 20px; 
+    left: 20px;
+}
+.bleu{
+    border: 2px blue solid;
+}
+.decimal{
+    list-style-type: decimal;
+}
+.cercle{
+    list-style-type: circle;
+}
+.carre{
+   list-style-type: square; 
+}
