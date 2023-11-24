@@ -1,12 +1,10 @@
 *{
     padding: 0;
     margin: 0;
+    font-family: BlenderProBook;
 }
 img{
     width: 20%
-}
-body{
-   
 }
 h1{
     color: red;
