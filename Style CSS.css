@@ -24,8 +24,12 @@ h1{
     top: 20px; 
     left: 20px;
 }
-.bleu{
-    border: 2px blue solid;
+.fond{
+    width: 100%;
+    height: 100vh;
+    background-clip: linear-gradient(rgba(0,0,0,0.75)),rgba(0,0,0,0.75),url(cyberpunk-video.mp4);
+    background-size: cover;
+    background-position: center;
 }
 .decimal{
     list-style-type: decimal;
