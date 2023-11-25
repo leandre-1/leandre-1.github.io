@@ -5,11 +5,11 @@
     font-family: BlenderProBook, sans-serif;
 }
 
-.fond{
+.video{
     height: 100vh;
     width: 100vw;
     object-fit: cover;
-    position: fixed;
+    position: absolute;
     left: 0;
     right: 0;
     top: 0;
