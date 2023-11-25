@@ -26,9 +26,8 @@ nav{
     position: absolute;
     top: 0;
     left: 0;
-    padding: 20px 8%;
+    padding: 25px 40px;
     display: flex;
-    align-items: center;
     justify-content: space-between;
 }
 nav .logo{
@@ -38,10 +37,10 @@ nav ul li{
     list-style: none;
     display: inline-block;
     margin-left: 18.3px;
-    text-decoration: none;
+    margin-right: 18.3px;
     border: 1px solid #FCEE0A;
     padding: 10px 20px;
-    margin-top: 20px;
+    margin-top: 14.5px;
 }
 .accueil{
     text-align: center;
