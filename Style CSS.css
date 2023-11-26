@@ -1,14 +1,14 @@
 @font-face {
+    font-family: 'Blender-Pro-Bold';
+    src: url('polices/Blender-Pro-Bold.ttf') format(truetype);
+}
+@font-face {
 	font-family: 'Blender-Pro-Book';
 	src: url('polices/Blender-Pro-Bold.ttf') format(truetype);
 }
 @font-face {
     font-family: 'refinery-25-semi-bold';
-    src: url('polices/refinery-25-semi-bold.ttf') format(truetype);
-@font-face {
-    font-family: 'Blender-Pro-Bold';
-    src: url('polices/Blender-Pro-Bold.ttf') format(truetype);
-}
+    src: url('polices/refinery-25-semi-bold.ttf') format(truetype); 
 }
 *{
     padding: 0;
@@ -26,23 +26,41 @@ body{
     align-items: center;
     justify-content: center;
 }
-nav{
-    position: absolute;
+.entête{
+    position: fixed;
     top: 0;
     left: 0;
+    right: 0;
+    z-index: 10;
     padding: 25px 40px;
     display: flex;
     justify-content: space-between;
 }
-nav .logo{
+.séries{
+    text-transform: uppercase;
+}
+.communauté{
+    text-transform: uppercase;
+}
+.acheter{
+    background: #fcee0a;
+}
+#acheter{
+    color: #000;
+}
+.logo{
     width: 266px;
 }
-nav ul li{
+div ul li{
     list-style: none;
     display: inline-block;
-    margin-left: 18.3px;
-    margin-right: 18.3px;
-
+    border: 1px solid #FCEE0A;
+    padding: 10px 20px;
+    margin-top: 15px;
+}
+div ul li a{
+    text-decoration: none;
+    color: white;
 }
 .accueil{
     text-align: center;
