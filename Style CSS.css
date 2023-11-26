@@ -46,7 +46,7 @@ nav ul li{
 }
 .accueil{
     text-align: center;
-    font-family: 'Blender-Pro-Bold';
+    font-family: 'Blender-Pro-Bold', sans-serif;
 }
 .accueil h1{
     font-family: 'refinery-25-semi-bold', sans-serif;
@@ -54,7 +54,6 @@ nav ul li{
     color: white;
 }
 .accueil a{
-    
     font-size: 22px;
     color: #FCEE0A;
     text-decoration: none;
