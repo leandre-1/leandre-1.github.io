@@ -1,10 +1,14 @@
 @font-face {
 	font-family: 'Blender-Pro-Book';
-	src: url('Blender-Pro-Book.ttf') format(truetype);
+	src: url('polices/Blender-Pro-Bold.ttf') format(truetype);
 }
 @font-face {
-    font-family: 'refinery-25-bold';
-    src: url('refinery-25-bold.ttf') format(truetype);
+    font-family: 'refinery-25-semi-bold';
+    src: url('polices/refinery-25-semi-bold.ttf') format(truetype);
+@font-face {
+    font-family: 'Blender-Pro-Bold';
+    src: url('polices/Blender-Pro-Bold.ttf') format(truetype);
+}
 }
 *{
     padding: 0;
@@ -13,7 +17,7 @@
 body{
     font-family: 'Blender-Pro-Book', sans-serif;
 }
-.navbar{
+.tout{
     width: 90%;
     height: 100vh;
     position: absolute;
@@ -38,19 +42,19 @@ nav ul li{
     display: inline-block;
     margin-left: 18.3px;
     margin-right: 18.3px;
-    border: 1px solid #FCEE0A;
-    padding: 10px 20px;
-    margin-top: 14.5px;
+
 }
 .accueil{
     text-align: center;
+    font-family: 'Blender-Pro-Bold';
 }
 .accueil h1{
-    font-family: 'refinery-25-bold', sans-serif;
+    font-family: 'refinery-25-semi-bold', sans-serif;
     font-size: 56px;
     color: white;
 }
 .accueil a{
+    
     font-size: 22px;
     color: #FCEE0A;
     text-decoration: none;
