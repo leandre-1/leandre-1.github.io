@@ -17,6 +17,9 @@
 body{
     font-family: 'Blender-Pro-Book', sans-serif;
 }
+.uppercase{
+    text-transform: uppercase;
+}
 .tout{
     width: 90%;
     height: 100vh;
@@ -35,12 +38,6 @@ body{
     padding: 25px 40px;
     display: flex;
     justify-content: space-between;
-}
-.séries{
-    text-transform: uppercase;
-}
-.communauté{
-    text-transform: uppercase;
 }
 .acheter{
     background: #fcee0a;
@@ -65,6 +62,7 @@ div ul li a{
 .accueil{
     text-align: center;
     font-family: 'Blender-Pro-Bold', sans-serif;
+    bottom: 3px;
 }
 .accueil h1{
     font-family: 'refinery-25-semi-bold', sans-serif;
@@ -72,13 +70,13 @@ div ul li a{
     color: white;
 }
 .accueil a{
-    font-size: 22px;
     color: #FCEE0A;
     text-decoration: none;
     display: inline-block;
     border: 1px solid #FCEE0A;
     padding: 10px 20px;
     margin-top: 20px;
+    
 }
 .video{
     position: absolute;
