@@ -39,6 +39,9 @@ body{
     display: flex;
     justify-content: space-between;
 }
+#fond:hover{
+    color: black;
+}
 .acheter{
     background: #fcee0a;
 
