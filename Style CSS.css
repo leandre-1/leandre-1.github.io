@@ -41,6 +41,7 @@ body{
 }
 .acheter{
     background: #fcee0a;
+
 }
 .noir{
     color: #000;
@@ -68,15 +69,15 @@ div ul li a{
     font-family: 'refinery-25-semi-bold', sans-serif;
     font-size: 56px;
     color: white;
+    margin-top: 30%;
 }
 .accueil a{
     color: #FCEE0A;
     text-decoration: none;
     display: inline-block;
     border: 1px solid #FCEE0A;
-    padding: 10px 20px;
-    margin-top: 20px;
-    
+    padding: 12px 20px;
+    margin-top: 30px;
 }
 .video{
     position: absolute;
