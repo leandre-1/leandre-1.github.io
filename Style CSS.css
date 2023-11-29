@@ -39,8 +39,12 @@ body{
     display: flex;
     justify-content: space-between;
 }
-#fond:hover{
+.couleur:hover{
     color: black;
+}
+.flou{
+    text-transform: uppercase;
+    background: rgba(0,0,0,.6);
 }
 .acheter{
     background: #fcee0a;
