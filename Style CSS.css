@@ -63,10 +63,10 @@ div ul li{
     border: 1px solid #FCEE0A;
     padding: 10px 20px;
     margin-top: 15px;
+    color: white;
 }
 div ul li a{
     text-decoration: none;
-    color: white;
 }
 .accueil{
     text-align: center;
