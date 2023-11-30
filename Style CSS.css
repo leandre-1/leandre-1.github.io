@@ -41,6 +41,7 @@ body{
 }
 .couleur:hover{
     color: black;
+    background-color: #FCEE0A;
 }
 .flou{
     text-transform: uppercase;
