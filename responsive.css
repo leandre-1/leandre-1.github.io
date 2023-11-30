@@ -1,0 +1,99 @@
+@font-face {
+    font-family: 'Blender-Pro-Bold';
+    src: url('polices/Blender-Pro-Bold.ttf') format(truetype);
+}
+@font-face {
+	font-family: 'Blender-Pro-Book';
+	src: url('polices/Blender-Pro-Bold.ttf') format(truetype);
+}
+@font-face {
+    font-family: 'refinery-25-semi-bold';
+    src: url('polices/refinery-25-semi-bold.ttf') format(truetype); 
+}
+*{
+    padding: 0;
+    margin: 0;
+}
+body{
+    font-family: 'Blender-Pro-Book', sans-serif;
+}
+.uppercase{
+    text-transform: uppercase;
+}
+.tout{
+    width: 90%;
+    height: 100vh;
+    position: absolute;
+    padding: 0 5%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.entête{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    z-index: 10;
+    padding: 25px 40px;
+    display: flex;
+    justify-content: space-between;
+}
+.couleur:hover{
+    color: black;
+}
+.flou{
+    text-transform: uppercase;
+    background: rgba(0,0,0,.6);
+}
+.acheter{
+    background: #fcee0a;
+
+}
+.noir{
+    color: #000;
+}
+.logo{
+    width: 266px;
+}
+div ul li{
+    list-style: none;
+    display: inline-block;
+    border: 1px solid #FCEE0A;
+    padding: 10px 20px;
+    margin-top: 15px;
+}
+div ul li a{
+    text-decoration: none;
+    color: white;
+}
+.accueil{
+    text-align: center;
+    font-family: 'Blender-Pro-Bold', sans-serif;
+    bottom: 3px;
+}
+.accueil h1{
+    font-family: 'refinery-25-semi-bold', sans-serif;
+    font-size: 56px;
+    color: white;
+    margin-top: 30%;
+}
+.accueil a{
+    color: #FCEE0A;
+    text-decoration: none;
+    display: inline-block;
+    border: 1px solid #FCEE0A;
+    padding: 12px 20px;
+    margin-top: 30px;
+}
+.fond{
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: -1;
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
