@@ -43,6 +43,9 @@ body{
     color: black;
     background-color: #FCEE0A;
 }
+.couleur{
+    color: white;
+}
 .flou{
     text-transform: uppercase;
     background: rgba(0,0,0,.6);
@@ -68,6 +71,7 @@ nav ul li{
 }
 nav ul li a{
     text-decoration: none;
+    color: white;
 }
 nav ul li ul{
     position: absolute;
