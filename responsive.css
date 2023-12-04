@@ -41,6 +41,7 @@ body{
 }
 .couleur:hover{
     color: black;
+    background-color: #FCEE0A;
 }
 .flou{
     text-transform: uppercase;
@@ -56,16 +57,30 @@ body{
 .logo{
     width: 266px;
 }
-div ul li{
+nav ul li{
     list-style: none;
     display: inline-block;
     border: 1px solid #FCEE0A;
     padding: 10px 20px;
     margin-top: 15px;
-}
-div ul li a{
-    text-decoration: none;
     color: white;
+    position: relative;
+}
+nav ul li a{
+    text-decoration: none;
+}
+nav ul li ul{
+    position: absolute;
+    top: calc(100% + var(--list-padding));
+    left: 0;
+    visibility: hidden;
+    opacity: 0;
+    transition: all 0.2s ease;
+}
+nav ul li:hover ul{
+    visibility: visible;
+    opacity: 1;
+    box-shadow: var(--shadow);
 }
 .accueil{
     text-align: center;

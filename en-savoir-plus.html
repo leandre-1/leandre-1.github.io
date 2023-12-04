@@ -8,14 +8,28 @@
     </head>
     <body>
         <div class="tout">
-            <div class="entête">
+            <nav class="entête">
                 <a href="index.html"><img src="images/logo-cyberpunk.png" class="logo"></a>
                 <ul>    
-                    <li class="couleur flou"><a href="jeux-1.html">Jeux</a></li>
+                    <li class="couleur flou">
+                        <a href="jeux-1.html">Jeux<ion-icon name="caret-down"></ion-icon></a>
+                        <ul>
+                            <li class="couleur flou"><a class="couleur" href="jeux-1.html">Cyberpunk</a></li>
+                            <li class="couleur flou"><a class="couleur" href="jeux-2.html">Phantom Liberty</a></li>
+                        </ul>
+                    </li>
                     <li class="couleur flou"><a href="série.html">Série</a></li>
                     <li class="acheter"><a class="noir" target="_blank" href="https://www.instant-gaming.com/fr/14769-acheter-cyberpunk-2077-ultimate-edition-ultimate-edition-pc-jeu-gog-com/">Acheter maintenant</a></li>
                 </ul>
-            </div>
+            </nav>
         </div>
+        <script 
+            type="module" 
+            src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js">
+        </script>
+        <script 
+            nomodule 
+            src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js">
+        </script>
     </body>
 </html>
