@@ -17,9 +17,6 @@
 body{
     font-family: 'Blender-Pro-Book', sans-serif;
 }
-.uppercase{
-    text-transform: uppercase;
-}
 .tout{
     width: 90%;
     height: 100vh;
@@ -28,6 +25,7 @@ body{
     display: flex;
     align-items: center;
     justify-content: center;
+    text-transform: uppercase;
 }
 .entête{
     position: fixed;
@@ -38,16 +36,13 @@ body{
     padding: 25px 40px;
     display: flex;
     justify-content: space-between;
+    color: white;
 }
 .couleur:hover{
     color: black;
     background-color: #FCEE0A;
 }
-.couleur{
-    color: white;
-}
 .flou{
-    text-transform: uppercase;
     background: rgba(0,0,0,.6);
 }
 .acheter{
