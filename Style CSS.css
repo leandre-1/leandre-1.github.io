@@ -16,15 +16,6 @@
 }
 body{
     font-family: 'Blender-Pro-Book', sans-serif;
-}
-.tout{
-    width: 90%;
-    height: 100vh;
-    position: absolute;
-    padding: 0 5%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
     text-transform: uppercase;
 }
 .entête{
@@ -41,6 +32,9 @@ body{
 .couleur:hover{
     color: black;
     background-color: #FCEE0A;
+}
+.couleur{
+    color: white;
 }
 .flou{
     background: rgba(0,0,0,.6);
@@ -60,13 +54,25 @@ nav ul li{
     display: inline-block;
     border: 1px solid #FCEE0A;
     padding: 10px 20px;
-    margin-top: 15px;
     color: white;
     position: relative;
 }
+
+.container{
+    margin-top: 15px;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+}
+
 nav ul li a{
     text-decoration: none;
-    color: white;
+    display: flex;
+    justify-content: center;
+    flex-direction: row;
+    align-items: center;
 }
 nav ul li ul{
     position: absolute;
