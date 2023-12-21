@@ -96,7 +96,7 @@ nav ul li:hover ul{
     font-family: 'refinery-25-semi-bold', sans-serif;
     font-size: 56px;
     color: white;
-    margin-top: 30%;
+    margin-top: 37%;
 }
 .accueil a{
     color: #FCEE0A;
@@ -116,4 +116,13 @@ nav ul li:hover ul{
     height: 100%;
     width: 100%;
     object-fit: cover;
+}
+.tableau{
+    border: 1px #FCEE0A solid;
+    color: white;
+    background: rgba(0,0,0,.6);
+    border-collapse: collapse;
+    margin-top: 30%;
+    margin-left: 15%;
+    padding: 10px 10px;
 }
