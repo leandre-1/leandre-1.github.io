@@ -131,6 +131,7 @@ class Guerrier(Personnage):
         #retire de la vie au méchant
         #si le méchant est mort augmenter la force de 1 du guerrier
 
+
 #la taille de la fenetre dépend de la largeur et de la hauteur du niveau
 #on rajoute une rangée de 32 pixels en bas de la fentre pour afficher le score d'ou (hauteur +1)
 pygame.init()
