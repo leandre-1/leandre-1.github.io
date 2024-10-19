@@ -186,7 +186,7 @@ chargetiles(tiles)  #chargement des images
 
 chevalier = Personnage([1,1],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/chevalier_d.png",collisions,'chevalier',10,0,1)
 chevalier_ennemi = Personnage([3,3],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/chevalier_ennemi_d.png",collisions,'chevalier_ennemi',10,0,1)
-magicien = Personnage([3,5],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/magicien_d.png",collisions,'magicien',10,0,1)
+magicien = Personnage([3,5],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/magicien_g.png",collisions,'magicien',10,0,1)
 
 aventuriers = pygame.sprite.Group()
 aventuriers.add(chevalier)
