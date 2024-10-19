@@ -184,16 +184,16 @@ fenetre.fill((0,0,0))   #efface la fenetre
 chargetiles(tiles)  #chargement des images
 
 
-perso = Personnage([1,1],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/perso.png",collisions,'magicien',10,0,1)
-perso2 = Personnage([3,3],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/perso.png",collisions,'magicien',10,0,1)
-perso3 = Personnage([3,5],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/perso.png",collisions,'chevalier',10,0,1)
+chevalier = Personnage([1,1],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/chevalier_d.png",collisions,'chevalier',10,0,1)
+chevalier_ennemi = Personnage([3,3],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/chevalier_ennemi_d.png",collisions,'chevalier_ennemi',10,0,1)
+magicien = Personnage([3,5],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/magicien_d.png",collisions,'magicien',10,0,1)
 
 aventuriers = pygame.sprite.Group()
-aventuriers.add(perso)
-aventuriers.add(perso3)
+aventuriers.add(chevalier)
+aventuriers.add(magicien)
 
 mechants = pygame.sprite.Group()
-mechants.add(perso2)
+mechants.add(chevalier_ennemi)
 
 
 
@@ -203,20 +203,20 @@ while loop==True:
         if event.type == pygame.QUIT:
             loop = False            #fermeture de la fenetre (croix rouge)
         elif event.type == pygame.KEYDOWN:  #une touche a été pressée...laquelle ?
-            if event.key == pygame.K_UP:    #est-ce la touche UP
-                perso.haut()
-            elif event.key == pygame.K_DOWN:  #est-ce la touche DOWN
-                perso.bas()
-            elif event.key == pygame.K_RIGHT:  #est-ce la touche RIGHT
-                perso.droite()
-            elif event.key == pygame.K_LEFT:  #est-ce la touche LEFT
-                perso.gauche()
+            if event.key == pygame.K_z:    #est-ce la touche HAUT
+                chevalier.haut()
+            elif event.key == pygame.K_s:  #est-ce la touche BAS
+                chevalier.bas()
+            elif event.key == pygame.K_d:  #est-ce la touche DROITE
+                chevalier.droite()
+            elif event.key == pygame.K_q:  #est-ce la touche GAUCHE
+                chevalier.gauche()
             elif event.key == pygame.K_ESCAPE or event.unicode == 'q': #touche q pour quitter
                 loop = False
-    col = pygame.sprite.collide_rect(perso, perso2)
+    col = pygame.sprite.collide_rect(chevalier, chevalier_ennemi)
     if col==1:
         print("collision",col)
-        mechants.remove(perso2)
+        mechants.remove(chevalier_ennemi)
 
 
     fenetre.fill((0,0,0))
