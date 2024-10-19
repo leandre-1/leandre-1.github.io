@@ -1,7 +1,7 @@
 """
 Programme réalisé par nom, prénom, classe
 """
-import pygame
+import pygame,random
 
 #variables du niveau
 NB_TILES = 666   #nombre de tiles a chager (ici de 00.png à 26.png) 27 au total !!
@@ -96,13 +96,13 @@ class Personnage(pygame.sprite.Sprite):
             self.vie = self.estMort()
 
     def monterExperience(self):
-        #ajoute 2 points d’expérience
+        #ajoute 4 points d’expérience
         #Augmente d’un niveau tous les 10 xp
         #Exemple 30xp = niveau 3
-        self.xp+=2
+        self.xp+=4
         if  self.xp ==10:
             self.niveau+=1
-            self.xp=0
+            self.xp-=10
 
     def estVivant(self):
         #retourne vrai si le personnage est vivant
@@ -123,15 +123,21 @@ class Guerrier(Personnage):
         #ajoute 1 en force
         self.force+=1
     def combat(self,adversaire):
-        attaque=randint(1, 4)
-        degats=attaque*self.niveau*self.force-adversaire.niveau
-        print("degat sur l'ennemi'",degats)
-        #inflige des dégats au mechant si celui-ci est vivant
-        #incrémente le nombre de points d’expérience correspondant aux dégâts infligés
+        if adversaire.estVivant():
+            attaque=random.randint(1, 4)
+            degats=attaque*self.niveau*self.force-adversaire.niveau
+            adversaire.retirerVie(degats)
+            print("Dégats sur l'ennemi : ",degats)
+        if adversaire.estMort():
+            print("L'ennemi mort")
+            self.augmenterForce()
+            self.monterExperience()
+        #inflige des dégats à l'ennemi si celui-ci est vivant
+        #retire de la vie à l'ennemi
+        #si l'ennemi est mort augmenter la force de 1 du guerrier
+        #augmente l'expérience du guerrier si l'ennemi est mort
         #Monte si nécessaire en niveau en fonction du nombre de points xp
-        #retire de la vie au méchant
-        #si le méchant est mort augmenter la force de 1 du guerrier
-
+        
 
 #la taille de la fenetre dépend de la largeur et de la hauteur du niveau
 #on rajoute une rangée de 32 pixels en bas de la fentre pour afficher le score d'ou (hauteur +1)
@@ -180,7 +186,7 @@ chargetiles(tiles)  #chargement des images
 
 perso = Personnage([1,1],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/perso.png",collisions,'magicien',10,0,1)
 perso2 = Personnage([3,3],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/perso.png",collisions,'magicien',10,0,1)
-perso3 = Personnage([3,5],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/perso.png",collisions,'magicien',10,0,1)
+perso3 = Personnage([3,5],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/perso.png",collisions,'chevalier',10,0,1)
 
 aventuriers = pygame.sprite.Group()
 aventuriers.add(perso)
