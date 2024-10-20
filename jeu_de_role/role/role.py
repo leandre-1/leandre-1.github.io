@@ -106,12 +106,12 @@ class Personnage(pygame.sprite.Sprite):
 
     def estVivant(self):
         #retourne vrai si le personnage est vivant
-        if self.vie != 0:
+        if self.vie > 0:
             return True
 
     def estMort(self):
         #retourne vrai si le personnage est mort
-        if self.vie == 0:
+        if self.vie <= 0:
             return False
 
 
@@ -146,19 +146,16 @@ class Magicien(Personnage):
         self.maxMana+=10    #augmente de 10 le maxMana du magicien
     
     def ajouterMana(self):
-        self.mana+=1    #ajoute 1 en self.mana sans dépasser self.maxMana
+        if self.mana+5<=self.maxMana:
+            self.mana+=5    #ajoute 5 en self.mana sans dépasser self.maxMana
     
     def retirerMana(self,mana):
-        if Magicien.retirerMana():  #retourne vrai si le magicien à lancé un sort
-            print("Le magicien a lancé un sort")
-            return True
-        if mana == 0:   #retourne faux si le magicien ne peut plus lancer de sort
-            print("Le magicien ne peut plus lancer de sort")
-            return False
         if self.mana-mana>=0:   #retire mana à self.mana sans descendre en dessous de 0
             self.mana-=mana
-            return True
+            print("Le magicien a lancé un sort")
+            return True     #retourne vrai si le magicien à lancé un sort
         else:
+            print("Le magicien ne peut plus lancer de sort")    #retourne faux si le magicien ne peut plus lancer de sort
             return False
         
     def combat(self,adversaire):
@@ -172,14 +169,9 @@ class Magicien(Personnage):
         if adversaire.estMort():
             print("L'ennemi mort")       
             self.monterExperience()     #augmente l'expérience du guerrier si l'ennemi est mort
-            self.augmenterMana(10)      #Monte si nécessaire en niveau en fonction du nombre de points xp
-        
-        
-        
-       
-        #si l'ennemi est mort augmenter self.maxMana de 10 du magicien
+            self.augmenterMana()        #si l'ennemi est mort augmenter self.maxMana de 10 du magicien
+            self.ajouterMana()      
 
-        
 
 #la taille de la fenetre dépend de la largeur et de la hauteur du niveau
 #on rajoute une rangée de 32 pixels en bas de la fentre pour afficher le score d'ou (hauteur +1)
@@ -212,12 +204,9 @@ def afficheNiveau(niveau):
 
 
 def afficheScore(score):
-    """
-    affiche le score
-    """
-    scoreAafficher = font.render(str(score), True, (0, 255, 0))
+    #affiche le score en bas de la fenetre   
+    scoreAafficher = font.render(str(score), True, (255, 255, 255))
     fenetre.blit(scoreAafficher,(120,250))
-    pass
 
 
 
