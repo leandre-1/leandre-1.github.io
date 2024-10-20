@@ -100,7 +100,7 @@ class Personnage(pygame.sprite.Sprite):
         #Augmente d’un niveau tous les 10 xp
         #Exemple 30xp = niveau 3
         self.xp+=4
-        if  self.xp ==10:
+        if  self.xp >=10:
             self.niveau+=1
             self.xp-=10
 
@@ -116,27 +116,60 @@ class Personnage(pygame.sprite.Sprite):
 
 
 class Guerrier(Personnage):
-    def __init__(self,nom,force,vie,xp,niveau):
-        super().__init__(nom,vie,xp,niveau)
+    def __init__(self,position,size,img,collisions,nom,force,vie,xp,niveau):
+        super().__init__(position,size,img,collisions,nom,vie,xp,niveau)
         self.force=force
+    
     def augmenterForce(self):
-        #ajoute 1 en force
-        self.force+=1
+        self.force+=1   #augmente de 1 la force du guerrier
+    
     def combat(self,adversaire):
-        if adversaire.estVivant():
+        if adversaire.estVivant():     #inflige des dégats à l'ennemi si celui-ci est vivant
             attaque=random.randint(1, 4)
             degats=attaque*self.niveau*self.force-adversaire.niveau
-            adversaire.retirerVie(degats)
+            adversaire.retirerVie(degats)        #retire de la vie à l'ennemi
             print("Dégats sur l'ennemi : ",degats)
         if adversaire.estMort():
             print("L'ennemi mort")
-            self.augmenterForce()
-            self.monterExperience()
-        #inflige des dégats à l'ennemi si celui-ci est vivant
+            self.augmenterForce()        #augmente la force du guerrier si l'ennemi est mort
+            self.monterExperience()      #augmente l'expérience du guerrier si l'ennemi est mort
+                                         #Monte si nécessaire en niveau en fonction du nombre de points xp
+                    
+           
+class Magicien(Personnage):
+    def __init__(self,position,size,img,collisions,nom,mana,vie,xp,niveau):
+        super().__init__(position,size,img,collisions,nom,vie,xp,niveau)
+        self.maxMana=mana
+        self.mana=mana
+    
+    def augmenterMana(self): 
+        self.maxMana+=10    #augmente de 10 le maxMana du magicien
+    
+    def ajouterMana(self):
+        self.mana+=1    #ajoute 1 en self.mana sans dépasser self.maxMana
+    
+    def retirerMana(self,mana):
+        #retire mana à self.mana sans descendre en dessous de 0
+        #retourne vrai si le magicien à lancé un sort
+        #retourne faux si le magicien ne peut plus lancer de sort
+        if self.mana-mana>=0:
+            self.mana-=mana
+            return True
+        else:
+            return False
+        if 
+        
+    def combat(self,adversaire):
+        attaque=random.randint(1, 4)
+        degats=attaque*self.niveau*2-adversaire.niveau
+        print("Dégat du magicien sur l'ennemi'",degats)            
+        #inflige des dégats à l'ennemi si celui-ci est vivant et que le magicien dispose de nana
         #retire de la vie à l'ennemi
-        #si l'ennemi est mort augmenter la force de 1 du guerrier
         #augmente l'expérience du guerrier si l'ennemi est mort
         #Monte si nécessaire en niveau en fonction du nombre de points xp
+        #retire de la vie au méchant et diminue de 1 self.mana (consommation de magie)
+        #si l'ennemi est mort augmenter self.maxMana de 10 du magicien
+
         
 
 #la taille de la fenetre dépend de la largeur et de la hauteur du niveau
@@ -173,9 +206,8 @@ def afficheScore(score):
     """
     affiche le score
     """
-    #exemple bidon
-    #scoreAafficher = font.render(str(score), True, (0, 255, 0))
-    #fenetre.blit(scoreAafficher,(120,250))
+    scoreAafficher = font.render(str(score), True, (0, 255, 0))
+    fenetre.blit(scoreAafficher,(120,250))
     pass
 
 
@@ -184,9 +216,9 @@ fenetre.fill((0,0,0))   #efface la fenetre
 chargetiles(tiles)  #chargement des images
 
 
-chevalier = Personnage([1,1],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/chevalier_d.png",collisions,'chevalier',10,0,1)
-chevalier_ennemi = Personnage([3,3],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/chevalier_ennemi_d.png",collisions,'chevalier_ennemi',10,0,1)
-magicien = Personnage([3,5],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/magicien_g.png",collisions,'magicien',10,0,1)
+chevalier = Guerrier([1,1],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/chevalier_d.png",collisions,'Chevalier',1,10,0,1)
+chevalier_ennemi = Guerrier([4,3],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/chevalier_ennemi_d.png",collisions,'Chevalier ennemi',1,10,0,1)
+magicien = Personnage([4,5],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/magicien_d.png",collisions,'Magicien',10,0,1)
 
 aventuriers = pygame.sprite.Group()
 aventuriers.add(chevalier)
@@ -211,7 +243,7 @@ while loop==True:
                 chevalier.droite()
             elif event.key == pygame.K_q:  #est-ce la touche GAUCHE
                 chevalier.gauche()
-            elif event.key == pygame.K_ESCAPE or event.unicode == 'q': #touche q pour quitter
+            elif event.key == pygame.K_ESCAPE: #touche échap pour quitter
                 loop = False
     col = pygame.sprite.collide_rect(chevalier, chevalier_ennemi)
     if col==1:
@@ -226,6 +258,6 @@ while loop==True:
     mechants.update()
     mechants.draw(fenetre)
     pygame.display.update() #mets à jour la fentre graphique
-    #pygame.display.flip()
-    #clock.tick(60)
+    pygame.display.flip()
+    clock.tick(60)
 pygame.quit()
