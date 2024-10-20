@@ -128,7 +128,7 @@ class Guerrier(Personnage):
             attaque=random.randint(1, 4)
             degats=attaque*self.niveau*self.force-adversaire.niveau
             adversaire.retirerVie(degats)        #retire de la vie à l'ennemi
-            print("Dégats sur l'ennemi : ",degats)
+            print("Dégats du guerrier sur l'ennemi : ",degats)
         if adversaire.estMort():
             print("L'ennemi mort")
             self.augmenterForce()        #augmente la force du guerrier si l'ennemi est mort
@@ -149,25 +149,34 @@ class Magicien(Personnage):
         self.mana+=1    #ajoute 1 en self.mana sans dépasser self.maxMana
     
     def retirerMana(self,mana):
-        #retire mana à self.mana sans descendre en dessous de 0
-        #retourne vrai si le magicien à lancé un sort
-        #retourne faux si le magicien ne peut plus lancer de sort
-        if self.mana-mana>=0:
+        if Magicien.retirerMana():  #retourne vrai si le magicien à lancé un sort
+            print("Le magicien a lancé un sort")
+            return True
+        if mana == 0:   #retourne faux si le magicien ne peut plus lancer de sort
+            print("Le magicien ne peut plus lancer de sort")
+            return False
+        if self.mana-mana>=0:   #retire mana à self.mana sans descendre en dessous de 0
             self.mana-=mana
             return True
         else:
             return False
-        if 
         
     def combat(self,adversaire):
-        attaque=random.randint(1, 4)
-        degats=attaque*self.niveau*2-adversaire.niveau
-        print("Dégat du magicien sur l'ennemi'",degats)            
-        #inflige des dégats à l'ennemi si celui-ci est vivant et que le magicien dispose de nana
-        #retire de la vie à l'ennemi
-        #augmente l'expérience du guerrier si l'ennemi est mort
-        #Monte si nécessaire en niveau en fonction du nombre de points xp
-        #retire de la vie au méchant et diminue de 1 self.mana (consommation de magie)
+        if adversaire.estVivant() and self.mana>0:     #inflige des dégats à l'ennemi si celui-ci est vivant et que le magicien dispose de mana
+            attaque=random.randint(1, 4)
+            degats=attaque*self.niveau*2-adversaire.niveau
+            adversaire.retirerVie(degats)        #retire de la vie à l'ennemi
+            self.retirerMana(1)                  #retire de la vie au méchant et diminue de 1 self.mana (consommation de magie)
+            print("Dégat du magicien sur l'ennemi'",degats)
+            
+        if adversaire.estMort():
+            print("L'ennemi mort")       
+            self.monterExperience()     #augmente l'expérience du guerrier si l'ennemi est mort
+            self.augmenterMana(10)      #Monte si nécessaire en niveau en fonction du nombre de points xp
+        
+        
+        
+       
         #si l'ennemi est mort augmenter self.maxMana de 10 du magicien
 
         
@@ -218,7 +227,7 @@ chargetiles(tiles)  #chargement des images
 
 chevalier = Guerrier([1,1],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/chevalier_d.png",collisions,'Chevalier',1,10,0,1)
 chevalier_ennemi = Guerrier([4,3],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/chevalier_ennemi_d.png",collisions,'Chevalier ennemi',1,10,0,1)
-magicien = Personnage([4,5],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/magicien_d.png",collisions,'Magicien',10,0,1)
+magicien = Magicien([4,5],TITLE_SIZE,"C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/magicien_d.png",collisions,'Magicien',5,10,0,1)
 
 aventuriers = pygame.sprite.Group()
 aventuriers.add(chevalier)
