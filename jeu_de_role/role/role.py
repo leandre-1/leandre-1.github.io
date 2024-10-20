@@ -63,24 +63,24 @@ class Personnage(pygame.sprite.Sprite):
         self.niveau=niveau
 
     def testCollisionsDecor(self,x,y):
-        if (self.collisions[self.y+y][self.x+x]==0):
+        if (self.collisions[int(self.y+y)][int(self.x+x)]==0):
             self.x+=x
             self.y+=y
 
     def droite(self):
-        self.testCollisionsDecor(1,0)
+        self.testCollisionsDecor(0.1,0)
         self.rect.x=self.x*self.size
 
     def gauche(self):
-        self.testCollisionsDecor(-1,0)
+        self.testCollisionsDecor(-0.1,0)
         self.rect.x=self.x*self.size
 
     def haut(self):
-        self.testCollisionsDecor(0,-1)
+        self.testCollisionsDecor(0,-0.1)
         self.rect.y=self.y*self.size
 
     def bas(self):
-        self.testCollisionsDecor(0,1)
+        self.testCollisionsDecor(0,0.1)
         self.rect.y=self.y*self.size
 
     def ajouterVie(self,vie):
@@ -227,22 +227,24 @@ mechants.add(chevalier_ennemi)
 
 
 
-loop=True
-while loop==True:
+loop = True
+while loop:
     for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            loop = False            #fermeture de la fenetre (croix rouge)
-        elif event.type == pygame.KEYDOWN:  #une touche a été pressée...laquelle ?
-            if event.key == pygame.K_z:    #est-ce la touche HAUT
-                chevalier.haut()
-            elif event.key == pygame.K_s:  #est-ce la touche BAS
-                chevalier.bas()
-            elif event.key == pygame.K_d:  #est-ce la touche DROITE
-                chevalier.droite()
-            elif event.key == pygame.K_q:  #est-ce la touche GAUCHE
-                chevalier.gauche()
-            elif event.key == pygame.K_ESCAPE: #touche échap pour quitter
-                loop = False
+        if event.type == pygame.QUIT:  # fermeture de la fenêtre (croix rouge)
+            loop = False
+    keys = pygame.key.get_pressed() # Récupère l'état des touches pressées
+    if keys[pygame.K_z]:    #est-ce la touche HAUT
+        chevalier.haut()
+    if keys[pygame.K_s]:    #est-ce la touche BAS
+        chevalier.bas()
+    if keys[pygame.K_d]:    #est-ce la touche DROITE
+        chevalier.droite()
+    if keys[pygame.K_q]:    #est-ce la touche GAUCHE
+        chevalier.gauche()   
+    if keys[pygame.K_ESCAPE]:   #touche échap pour quitter
+        loop = False
+    
+
     col = pygame.sprite.collide_rect(chevalier, chevalier_ennemi)
     if col==1:
         print("collision",col)
