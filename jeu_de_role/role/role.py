@@ -1,5 +1,5 @@
 """
-Programme réalisé par nom, prénom, classe
+Programme réalisé par Tempérault, Léandre, TG2
 """
 import pygame,random
 
@@ -10,9 +10,6 @@ largeur=10       #hauteur du niveau
 hauteur=13       #largeur du niveau
 tiles=[]       #liste d'images tiles
 clock = pygame.time.Clock()
-
-
-#definition du niveau
 
 niveau=[[486,531, 24, 24, 24, 24, 24, 24, 24, 25],
         [486,531, 47, 47, 86, 47, 47, 47, 47, 48],
@@ -26,7 +23,7 @@ niveau=[[486,531, 24, 24, 24, 24, 24, 24, 24, 25],
         [486,541, 47,141,142,143, 47, 47, 47, 48],
         [486,545, 47,164,165,166, 47, 47, 47, 48],
         [486,489,507,507,507,507,507,507,507,508],
-        [486,486,486,486,486,486,486,486,486,531]]
+       [486,486,486,486,486,486,486,486,486,531]]
 
 decor=[[  0,  0,  0,  0,  0,  0,  0,  0,  0,  0],
        [  0,  0,  0, 61,  0, 64,  0,  0,  0,  0],
@@ -191,7 +188,7 @@ class Magicien(Personnage):
 #la taille de la fenetre dépend de la largeur et de la hauteur du niveau
 #on rajoute une rangée de 32 pixels en bas de la fentre pour afficher le score d'ou (hauteur +1)
 pygame.init()
-fenetre = pygame.display.set_mode((largeur*TITLE_SIZE, (hauteur+1)*TITLE_SIZE))
+fenetre = pygame.display.set_mode((largeur*TITLE_SIZE, (hauteur+1)*TITLE_SIZE),) #pygame.FULLSCREEN
 pygame.display.set_caption("Dungeon")
 font = pygame.font.Font('freesansbold.ttf', 20)
 
