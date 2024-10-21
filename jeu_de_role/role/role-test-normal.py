@@ -172,7 +172,7 @@ collisions = chargerCollisionsTiled(tmx_data)
 
 # Création des personnages
 chevalier = Guerrier([1, 1], TITLE_SIZE, "C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/chevalier_d.png", collisions, 'Chevalier', 1, 10, 0, 1)
-chevalier_ennemi = Guerrier([4, 8], TITLE_SIZE, "C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/chevalier_ennemi_d.png", collisions, 'Chevalier ennemi', 1, 10, 0, 1)
+chevalier_ennemi = Guerrier([4, 6], TITLE_SIZE, "C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/chevalier_ennemi_d.png", collisions, 'Chevalier ennemi', 1, 10, 0, 1)
 magicien = Magicien([4, 10], TITLE_SIZE, "C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/magicien_d.png", collisions, 'Magicien', 5, 10, 0, 1)
 
 aventuriers = pygame.sprite.Group(chevalier, magicien)
