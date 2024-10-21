@@ -2,7 +2,7 @@ import pygame,pytmx,random
 
 # Constantes
 TITLE_SIZE = 32
-LARGEUR = 20  # largeur du niveau
+LARGEUR = 30  # largeur du niveau
 HAUTEUR = 20  # hauteur du niveau
 clock = pygame.time.Clock()
 
