@@ -1,5 +1,6 @@
-import pygame,pytmx,random
+import pygame,pytmx,random, pyscroll
 
+# Constantes
 TITLE_SIZE = 32
 LARGEUR = 30  # largeur du niveau
 HAUTEUR = 22  # hauteur du niveau
@@ -11,35 +12,24 @@ def chargerCarteTiled(fichier):
     return tmx_data
 
 # Afficher la carte
-def afficherCarteTiled(fenetre, tmx_data):
-    for layer in tmx_data.visible_layers:
-        if isinstance(layer, pytmx.TiledTileLayer):
-            for x, y, gid in layer:
-                tile = tmx_data.get_tile_image_by_gid(gid)
-                if tile:
-                    fenetre.blit(tile, (x * TITLE_SIZE, y * TITLE_SIZE))
+tmx_data = pytmx.util_pygame.load_pygame('carte.tmx')
+map_data = pyscroll.data.TiledMapData(tmx_data)
+map_layer = pyscroll.orthographic.BufferedRenderer(map_data, screen.get_size())
+
+# Dessiner le groupe de calque
+group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=2)
 
 # Charger les données de collision
-def chargerCollisionsTiled(tmx_data):
-    collisions = []
-    for y in range(tmx_data.height):
-        collisions.append([0] * tmx_data.width)
-    for obj in tmx_data.objects:
-        if obj.name=="collision":
-            for x in range(int(obj.x // TITLE_SIZE), int((obj.x + obj.width) // TITLE_SIZE)):
-                for y in range(int(obj.y // TITLE_SIZE), int((obj.y + obj.height) // TITLE_SIZE)):
-                    collisions[y][x] = 1
-    return collisions
-
+for obj in tmx_data.objects:
+   walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height))
 
 class Personnage(pygame.sprite.Sprite):
 
-    def __init__(self,position,size,img,collisions,nom,vie,xp,niveau):
+    def __init__(self,position,size,img,nom,vie,xp,niveau):
         super().__init__()
         self.image = pygame.image.load(img)
         self.rect = self.image.get_rect()
         self.size=size
-        self.collisions=collisions
         self.x,self.y=position
         self.rect.x=self.x*size
         self.rect.y=self.y*size
@@ -49,25 +39,16 @@ class Personnage(pygame.sprite.Sprite):
         self.xp=xp
         self.niveau=niveau
 
-    def testCollisionsDecor(self,x,y):
-        if (self.collisions[int(self.y+y)][int(self.x+x)]==0):
-            self.x+=x
-            self.y+=y
-
     def droite(self):
-        self.testCollisionsDecor(1,0)
         self.rect.x=self.x*self.size
 
     def gauche(self):
-        self.testCollisionsDecor(-1,0)
         self.rect.x=self.x*self.size
 
     def haut(self):
-        self.testCollisionsDecor(0,-1)
         self.rect.y=self.y*self.size
 
     def bas(self):
-        self.testCollisionsDecor(0,1)
         self.rect.y=self.y*self.size
 
     def ajouterVie(self,vie):
@@ -166,54 +147,15 @@ pygame.display.set_caption("Dungeon")
 # Charger la carte depuis Tiled
 tmx_data = chargerCarteTiled('C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/carte.tmx')
 
-# Charger les collisions
-collisions = chargerCollisionsTiled(tmx_data)
 
 # Création des personnages
-chevalier = Guerrier([22, 6], TITLE_SIZE, "C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/chevalier_d.png", collisions, 'Chevalier', 1, 10, 0, 1)
-chevalier_ennemi = Guerrier([6, 7], TITLE_SIZE, "C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/chevalier_ennemi_d.png", collisions, 'Chevalier ennemi', 1, 10, 0, 1)
-magicien = Magicien([6, 12], TITLE_SIZE, "C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/magicien_d.png", collisions, 'Magicien', 5, 10, 0, 1)
+chevalier = Guerrier([22,6], TITLE_SIZE, "C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/chevalier_d.png", 'Chevalier', 1, 10, 0, 1)
+chevalier_ennemi = Guerrier([6, 7], TITLE_SIZE, "C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/chevalier_ennemi_d.png", 'Chevalier ennemi', 1, 10, 0, 1)
+magicien = Magicien([6, 12], TITLE_SIZE, "C:/Users/leandre.temperault/OneDrive/Documents/leandre-1.github.io/jeu_de_role/role/data/magicien_d.png", 'Magicien', 5, 10, 0, 1)
 
 aventuriers = pygame.sprite.Group(chevalier, magicien)
 mechants = pygame.sprite.Group(chevalier_ennemi)
 
-
-"""
-loop = True
-while loop:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:  # fermeture de la fenêtre (croix rouge)
-            loop = False
-    keys = pygame.key.get_pressed() # Récupère l'état des touches pressées
-    if keys[pygame.K_z]:    #est-ce la touche HAUT
-        chevalier.haut()
-    if keys[pygame.K_s]:    #est-ce la touche BAS
-        chevalier.bas()
-    if keys[pygame.K_d]:    #est-ce la touche DROITE
-        chevalier.droite()
-    if keys[pygame.K_q]:    #est-ce la touche GAUCHE
-        chevalier.gauche()   
-    if keys[pygame.K_ESCAPE]:   #touche échap pour quitter
-        loop = False
-"""
-"""
-loop = True
-while loop:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            loop = False
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_z:
-                chevalier.haut()
-            elif event.key == pygame.K_s:
-                chevalier.bas()
-            elif event.key == pygame.K_d:
-                chevalier.droite()
-            elif event.key == pygame.K_q:
-                chevalier.gauche()
-            elif event.key == pygame.K_ESCAPE:
-                loop = False
-"""
 def handle_input():
     pressed=pygame.key.get_pressed()
 
@@ -239,7 +181,7 @@ def handle_input():
 
     # Mise à jour de l'affichage
     fenetre.fill((0, 0, 0))  # Effacer l'écran
-    afficherCarteTiled(fenetre, tmx_data)  # Afficher le niveau
+    group.draw(screen)  # Afficher le niveau
     aventuriers.update()
     aventuriers.draw(fenetre)
     mechants.update()
