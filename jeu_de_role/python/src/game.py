@@ -17,16 +17,19 @@ class Game:
         map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
 
         #generer un joueur
-        #player_position = tmx_data.get_object_by_name('player')
-        self.player = Guerrier(706, 199, "sprites/chevalier_d.png", 'Chevalier', 1, 10, 0, 1)
+        classe = input("Veuillez choisir votre classe Guerrier ou Magicien : ")
+        if classe == "Guerrier":
+            self.player = Guerrier(706, 199, "sprites/chevalier_d.png", 'Chevalier', 1, 10, 0, 1)
+        elif classe == "Magicien":
+            self.player = Magicien(706, 199, "sprites/chevalier_d.png", 'Magicien', 5, 10, 0, 1)
+        else:
+            print("Classe inconnue, choix par défaut : Guerrier")
+            self.player = Guerrier(706, 199, "sprites/chevalier_d.png", 'Chevalier', 1, 10, 0, 1)
         self.npc = Guerrier(179, 145, "sprites/chevalier_ennemi_d.png", 'Chevalier ennemi', 1, 10, 0, 1)
         self.npc_2 = Guerrier(643, 550, "sprites/chevalier_ennemi_d.png", 'Chevalier ennemi', 1, 10, 0, 1)
         self.npc_3 = Magicien(223, 410, "sprites/magicien_d.png", 'Magicien', 5, 10, 0, 1)
         self.npc_4 = Magicien(863, 550, "sprites/magicien_d.png", 'Magicien', 5, 10, 0, 1)
 
-        #aventuriers = pygame.sprite.Group(chevalier, magicien)
-        #mechants = pygame.sprite.Group(chevalier_ennemi)
-        
         #definir une liste qui stocke les collisions
         self.walls = []
 
@@ -36,15 +39,15 @@ class Game:
 
         # Dessiner le grp de calque
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=3)
-        self.group.add(self.player) # Ajouter Player 1
-        self.group.add(self.npc)    # Ajouter NPC 
+        self.group.add(self.player) # Ajoute Player 1
+        self.group.add(self.npc)    # Ajoute NPC 
         self.group.add(self.npc_2)  
         self.group.add(self.npc_3)
         self.group.add(self.npc_4)
             
     def handle_input(self):
         pressed = pygame.key.get_pressed()
-        # Seul Player 1 réagit aux touches car le seul concerner par la fonction handle_input
+        # Seul Player 1 réagit aux touches car c'est le seul concerné par la fonction handle_input
         if pressed[pygame.K_z]:
             self.player.move_up()
         elif pressed[pygame.K_s]:
