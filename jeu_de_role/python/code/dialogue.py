@@ -20,10 +20,10 @@ class DialogBox:
             self.texts = dialog
 
     def render (self, screen):
-        if self.reading:
+        if self.reading and self.texts and self.text_index < len(self.texts):
             self.letter_index += 1
 
-            if self.letter_index >= len(self.texts[self.text_index]):
+            if self.letter_index >= len(self.texts[self.text_index]): #Si la lettre actuelle est supérieur ou égale à la longueur du texte
                 self.letter_index = self.letter_index 
 
             screen.blit(self.box, (130, 704)) #Défini la position de la boite de dialogue

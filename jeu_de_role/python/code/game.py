@@ -18,11 +18,18 @@ class Game:
         map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
 
         #generer un joueur      
-        self.player = Guerrier(706, 199, "sprites/chevalier_d.png", 'Chevalier', 1, 10, 0, 1,)
+        classe = input("Veuillez choisir votre classe Guerrier ou Magicien : ")
+        if classe == "Guerrier":
+            self.player = Guerrier(706, 199, "sprites/chevalier_d.png", 'Chevalier', 1, 10, 0, 1)
+        elif classe == "Magicien":
+            self.player = Magicien(706, 199, "sprites/chevalier_d.png", 'Magicien', 5, 10, 0, 1)
+        else:
+            print("Classe inconnue, choix par défaut : Guerrier")
+            self.player = Guerrier(706, 199, "sprites/chevalier_d.png", 'Chevalier', 1, 10, 0, 1,)
         
         #Generer les NPC
-        self.npc = NpcGuerrier(179, 145, "sprites/chevalier_ennemi_d.png", 'Bouliste', 1, 10, 0, 1,["Bouliste !", "Boboy"])
-        self.npc_2 = NpcGuerrier(643, 550, "sprites/chevalier_ennemi_d.png", 'Le Laitier', 1, 10, 0, 1, ["Je suis le laitier !", "Mon lait est délicieux !"])
+        self.npc = NpcGuerrier(179, 145, "sprites/chevalier_ennemi_d.png", 'Chevalier', 1, 10, 0, 1, ["qrsgvvvvvvvs!", "qsrvvv"])
+        self.npc_2 = NpcGuerrier(643, 550, "sprites/chevalier_ennemi_d.png", 'Chevalier', 1, 10, 0, 1, ["qfvvvvvvv<s!", "qfdv<sfqrv !"])
         self.npc_3 = NpcMagicien(223, 410, "sprites/magicien_d.png", 'Magicien', 5, 10, 0, 1,["Je suis le magicien !", "Je suis le plus fort !"])
         self.npc_4 = NpcMagicien(863, 550, "sprites/magicien_d.png", 'Magicien', 5, 10, 0, 1,["Je suis le magicien !", "Je suis le plus fort !"])
 
