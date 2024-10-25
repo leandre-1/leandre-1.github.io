@@ -134,3 +134,13 @@ class Magicien(Personnage):
             self.monterExperience()     #augmente l'expérience du guerrier si l'ennemi est mort
             self.augmenterMana()        #si l'ennemi est mort augmenter self.maxMana de 10 du magicien
             self.ajouterMana()
+
+class NpcMagicien(Magicien):
+    def __init__(self, x, y, img, nom, mana, vie, xp, niveau, dialog):
+        super().__init__(x, y,img,nom,mana,vie,xp,niveau)
+        self.dialog=dialog
+
+class NpcGuerrier(Guerrier):
+    def __init__(self, x, y, img, nom, force, vie, xp, niveau, dialog):
+        super().__init__(x, y,img,nom,force,vie,xp,niveau)
+        self.dialog=dialog

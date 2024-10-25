@@ -1,6 +1,6 @@
 import pygame,pytmx,pyscroll
 from dialogue import DialogBox
-from player import Guerrier, Magicien
+from player import Guerrier, Magicien, NpcMagicien, NpcGuerrier
 
 TITLE_SIZE = 32
 LARGEUR = 30  # largeur du niveau
@@ -9,7 +9,7 @@ HAUTEUR = 22  # hauteur du niveau
 #Creer la fenetre du jeu
 class Game:
     def __init__(self):
-        self.screen = pygame.display.set_mode((LARGEUR * TITLE_SIZE, (HAUTEUR + 2) * TITLE_SIZE))
+        self.screen = pygame.display.set_mode((LARGEUR * TITLE_SIZE, (HAUTEUR + 3) * TITLE_SIZE))
         pygame.display.set_caption("Dungeon")
 
         #Charger la carte
@@ -17,20 +17,14 @@ class Game:
         map_data = pyscroll.data.TiledMapData(tmx_data)
         map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
 
-        #generer un joueur
-        classe = input("Veuillez choisir votre classe Guerrier ou Magicien : ")
-        if classe == "Guerrier":
-            self.player = Guerrier(706, 199, "sprites/chevalier_d.png", 'Chevalier', 1, 10, 0, 1)
-        elif classe == "Magicien":
-            self.player = Magicien(706, 199, "sprites/chevalier_d.png", 'Magicien', 5, 10, 0, 1)
-        else:
-            print("Classe inconnue, choix par défaut : Guerrier")
-            self.player = Guerrier(706, 199, "sprites/chevalier_d.png", 'Chevalier', 1, 10, 0, 1)
+        #generer un joueur      
+        self.player = Guerrier(706, 199, "sprites/chevalier_d.png", 'Chevalier', 1, 10, 0, 1,)
         
-        self.npc = Guerrier(179, 145, "sprites/chevalier_ennemi_d.png", 'Bouliste', 1, 10, 0, 1)
-        self.npc_2 = Guerrier(643, 550, "sprites/chevalier_ennemi_d.png", 'Chevalier ennemi', 1, 10, 0, 1)
-        self.npc_3 = Magicien(223, 410, "sprites/magicien_d.png", 'Magicien', 5, 10, 0, 1)
-        self.npc_4 = Magicien(863, 550, "sprites/magicien_d.png", 'Magicien', 5, 10, 0, 1)
+        #Generer les NPC
+        self.npc = NpcGuerrier(179, 145, "sprites/chevalier_ennemi_d.png", 'Bouliste', 1, 10, 0, 1,["Bouliste !", "Boboy"])
+        self.npc_2 = NpcGuerrier(643, 550, "sprites/chevalier_ennemi_d.png", 'Le Laitier', 1, 10, 0, 1, ["Je suis le laitier !", "Mon lait est délicieux !"])
+        self.npc_3 = NpcMagicien(223, 410, "sprites/magicien_d.png", 'Magicien', 5, 10, 0, 1,["Je suis le magicien !", "Je suis le plus fort !"])
+        self.npc_4 = NpcMagicien(863, 550, "sprites/magicien_d.png", 'Magicien', 5, 10, 0, 1,["Je suis le magicien !", "Je suis le plus fort !"])
 
         self.dialog_box = DialogBox(self.screen, pygame.font.Font(None, 24))
 
@@ -70,6 +64,16 @@ class Game:
             if sprite.feet.collidelist(self.walls) > -1:
                 sprite.move_back()
 
+    def check_npc_collision(self, dialog_box):
+        if self.player.feet.colliderect(self.npc.rect):
+            dialog_box.start_reading()
+        elif self.player.feet.colliderect(self.npc_2.rect):
+            dialog_box.start_reading()
+        elif self.player.feet.colliderect(self.npc_3.rect):
+            dialog_box.start_reading()
+        elif self.player.feet.colliderect(self.npc_4.rect):
+            dialog_box.start_reading()
+
     #Boucle de jeu
     def run(self):
         clock = pygame.time.Clock()
@@ -86,6 +90,10 @@ class Game:
             for event in pygame.event.get():
                 if event.type == pygame.QUIT:
                     running = False
+                
+                elif event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_SPACE:
+                        self.check_npc_collision(self.dialog_box)
             
             clock.tick(60)
 
