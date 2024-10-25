@@ -1,4 +1,5 @@
 import pygame,pytmx,pyscroll
+from dialogue import DialogBox
 from player import Guerrier, Magicien
 
 TITLE_SIZE = 32
@@ -12,7 +13,7 @@ class Game:
         pygame.display.set_caption("Dungeon")
 
         #Charger la carte
-        tmx_data = pytmx.util_pygame.load_pygame("map/carte.tmx")
+        tmx_data = pytmx.util_pygame.load_pygame("carte/carte.tmx")
         map_data = pyscroll.data.TiledMapData(tmx_data)
         map_layer = pyscroll.orthographic.BufferedRenderer(map_data, self.screen.get_size())
 
@@ -25,10 +26,13 @@ class Game:
         else:
             print("Classe inconnue, choix par défaut : Guerrier")
             self.player = Guerrier(706, 199, "sprites/chevalier_d.png", 'Chevalier', 1, 10, 0, 1)
-        self.npc = Guerrier(179, 145, "sprites/chevalier_ennemi_d.png", 'Chevalier ennemi', 1, 10, 0, 1)
+        
+        self.npc = Guerrier(179, 145, "sprites/chevalier_ennemi_d.png", 'Bouliste', 1, 10, 0, 1)
         self.npc_2 = Guerrier(643, 550, "sprites/chevalier_ennemi_d.png", 'Chevalier ennemi', 1, 10, 0, 1)
         self.npc_3 = Magicien(223, 410, "sprites/magicien_d.png", 'Magicien', 5, 10, 0, 1)
         self.npc_4 = Magicien(863, 550, "sprites/magicien_d.png", 'Magicien', 5, 10, 0, 1)
+
+        self.dialog_box = DialogBox(self.screen, pygame.font.Font(None, 24))
 
         #definir une liste qui stocke les collisions
         self.walls = []
@@ -76,6 +80,7 @@ class Game:
             self.handle_input()
             self.update()
             self.group.draw(self.screen)
+            self.dialog_box.render(self.screen)
             pygame.display.flip()
             
             for event in pygame.event.get():

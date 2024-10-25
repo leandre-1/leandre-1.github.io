@@ -67,6 +67,7 @@ class Personnage(pygame.sprite.Sprite):
         if  self.xp >=10:
             self.niveau+=1
             self.xp-=10
+            print (f"Tu monte au niveau {self.niveau}")
 
     def estVivant(self):
         #retourne vrai si le personnage est vivant
@@ -91,9 +92,9 @@ class Guerrier(Personnage):
             attaque=random.randint(1, 4)
             degats=attaque*self.niveau*self.force-adversaire.niveau
             adversaire.retirerVie(degats)       #retire de la vie à l'ennemi
-            print("Dégâts du guerrier sur l'ennemi : ", degats)
+            print(f"Tu as infligé {degats} de dégats à {adversaire}")
         if adversaire.vie <= 0:
-            print("L'ennemi est mort")
+            print(f"{adversaire} est mort")
             self.augmenterForce()       #augmente la force du guerrier si l'ennemi est mort
             self.monterExperience()     #augmente l'expérience du guerrier si l'ennemi est mort
                                         #Monte si nécessaire en niveau en fonction du nombre de points xp
@@ -114,10 +115,10 @@ class Magicien(Personnage):
     def retirerMana(self, mana):
         if self.mana-mana>=0:    #retire mana à self.mana sans descendre en dessous de 0
             self.mana-=mana
-            print("Le magicien a lancé un sort")
+            print("Tu as lancé un sort sur {adversaire}")
             return True     #retourne vrai si le magicien à lancé un sort
         else:
-            print("Le magicien ne peut plus lancer de sort")
+            print("Tu ne peut plus lancer de sort")
             return False     #retourne faux si le magicien ne peut plus lancer de sort
 
     def combat(self, adversaire):
@@ -126,10 +127,10 @@ class Magicien(Personnage):
             degats = attaque*self.niveau*2-adversaire.niveau
             adversaire.retirerVie(degats)   #retire de la vie à l'ennemi
             self.retirerMana(1)             #retire de la vie au méchant et diminue de 1 self.mana (consommation de magie)
-            print("Dégâts du magicien sur l'ennemi : ", degats)
+            print(f"Tu as infligé {degats} de dégats à {adversaire}")
         
         if adversaire.estMort():
-            print("L'ennemi est mort")
+            print(f"{adversaire} est mort")
             self.monterExperience()     #augmente l'expérience du guerrier si l'ennemi est mort
             self.augmenterMana()        #si l'ennemi est mort augmenter self.maxMana de 10 du magicien
             self.ajouterMana()
