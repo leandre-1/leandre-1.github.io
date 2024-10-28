@@ -48,35 +48,28 @@ class Personnage(pygame.sprite.Sprite):
         self.feet.midbottom = self.rect.midbottom
 
     def ajouterVie(self,vie):
-        #ajoute de la vie dans self.vie sans dépasser self.maxVie
-        self.vie+=vie
+        self.vie+=vie   #ajoute de la vie dans self.vie sans dépasser self.maxVie
         if self.vie>self.maxVie:
             self.vie=self.maxVie
 
     def retirerVie(self,vie):
-        #retire de la vie dans self.vie sans être inférieur à 0
-        self.vie-=vie
+        self.vie-=vie   #retire de la vie dans self.vie sans être inférieur à 0
         if self.vie-vie<=0:
             self.vie = self.estMort()
 
     def monterExperience(self):
-        #ajoute 4 points d’expérience
-        #Augmente d’un niveau tous les 10 xp
-        #Exemple 30xp = niveau 3
-        self.xp+=4
-        if  self.xp >=10:
+        self.xp+=4          #ajoute 4 points d’expérience
+        if  self.xp >=10:   #augmente d’un niveau tous les 10 xp
             self.niveau+=1
             self.xp-=10
             print (f"Tu monte au niveau {self.niveau}")
 
     def estVivant(self):
-        #retourne vrai si le personnage est vivant
-        if self.vie > 0:
+        if self.vie > 0:    #retourne vrai si le personnage est vivant
             return True
 
     def estMort(self):
-        #retourne vrai si le personnage est mort
-        if self.vie <= 0:
+        if self.vie <= 0:   #retourne vrai si le personnage est mort
             return False
 
 class Guerrier(Personnage):
@@ -85,10 +78,10 @@ class Guerrier(Personnage):
         self.force=force
 
     def augmenterForce(self):
-        self.force+=1     #augmente de 1 la force du guerrier
+        self.force+=1    #augmente de 1 la force du guerrier
 
     def combat(self, adversaire):
-        if adversaire.estVivant():      #inflige des dégats à l'ennemi si celui-ci est vivant
+        if adversaire.estVivant():     #inflige des dégats à l'ennemi si celui-ci est vivant
             attaque=random.randint(1, 4)
             degats=attaque*self.niveau*self.force-adversaire.niveau
             adversaire.retirerVie(degats)       #retire de la vie à l'ennemi
@@ -97,7 +90,7 @@ class Guerrier(Personnage):
             print(f"{adversaire} est mort")
             self.augmenterForce()       #augmente la force du guerrier si l'ennemi est mort
             self.monterExperience()     #augmente l'expérience du guerrier si l'ennemi est mort
-                                        #Monte si nécessaire en niveau en fonction du nombre de points xp
+                                        #monte si nécessaire en niveau en fonction du nombre de points xp
 
 class Magicien(Personnage):
     def __init__(self, x, y, img, nom, mana, vie, xp, niveau):
