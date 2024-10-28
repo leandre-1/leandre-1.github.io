@@ -20,7 +20,7 @@ class DialogBox:
             self.texts = dialog
 
     def render (self, screen):
-        if self.reading and self.texts and self.text_index < len(self.texts):
+        if self.reading:
             self.letter_index += 1
 
             if self.letter_index >= len(self.texts[self.text_index]): #Si la lettre actuelle est supérieur ou égale à la longueur du texte
