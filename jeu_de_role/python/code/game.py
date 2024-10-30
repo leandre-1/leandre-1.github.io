@@ -28,9 +28,9 @@ class Game:
             self.player = Guerrier(706, 199, "sprites/chevalier_d.png", 'Chevalier', 1, 10, 0, 1,)
         
         #Generer les NPC
-        self.npc = NpcGuerrier(179, 145, "sprites/chevalier_ennemi_d.png", 'Bouliste', 1, 10, 0, 1, ["Bouliste !", "Boboy"])
-        self.npc_2 = NpcGuerrier(643, 550, "sprites/chevalier_ennemi_d.png", 'Le Laitier', 1, 10, 0, 1, ["Je suis le laitier !", "Mon lait est délicieux"])
-        self.npc_3 = NpcMagicien(223, 410, "sprites/petit_gandalf.png", 'Gandalf', 5, 10, 0, 1,["Vous ne passerez pas !", ""])
+        self.npc = NpcGuerrier(179, 145, "sprites/chevalier_ennemi_d.png", 'Bouliste', 1, 10, 0, 1, ["Bouuliste !", "Boboy"])
+        self.npc_2 = NpcGuerrier(643, 550, "sprites/chevalier_ennemi_d.png", 'Le Laitier', 1, 10, 0, 1, ["Je suis le laitier", "Mon lait est délicieux"])
+        self.npc_3 = NpcMagicien(223, 410, "sprites/petit_gandalf.png", 'Gandalf', 5, 10, 0, 1,["Vous ne passerez pas !", "Fuyez, pauvres fous !"])
         self.npc_4 = NpcMagicien(863, 550, "sprites/magicien_d.png", 'Magicien', 5, 10, 0, 1,["", ""])
 
         self.dialog_box = DialogBox(self.screen, pygame.font.Font(None, 24))    #Défini la boite de dialogue
@@ -73,13 +73,13 @@ class Game:
 
     def check_npc_collision(self, dialog_box):
         if self.player.feet.colliderect(self.npc.rect):
-            dialog_box.start_reading(self.npc.dialog)
+            dialog_box.start_reading(self.npc.dialog, self.npc.nom)
         elif self.player.feet.colliderect(self.npc_2.rect):
-            dialog_box.start_reading(self.npc_2.dialog)
+            dialog_box.start_reading(self.npc_2.dialog, self.npc_2.nom)
         elif self.player.feet.colliderect(self.npc_3.rect):
-            dialog_box.start_reading(self.npc_3.dialog)
+            dialog_box.start_reading(self.npc_3.dialog, self.npc_3.nom)
         elif self.player.feet.colliderect(self.npc_4.rect):
-            dialog_box.start_reading(self.npc_4.dialog)
+            dialog_box.start_reading(self.npc_4.dialog, self.npc_4.nom)
 
     #Boucle de jeu
     def run(self):
