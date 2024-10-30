@@ -42,15 +42,15 @@ class Game:
             if obj.type == 'collision':     #Si l'objet est un mur
                 self.walls.append(pygame.Rect(obj.x, obj.y, obj.width, obj.height,))    #Ajoute le mur à la liste des collisions
 
-        # Dessiner le grp de calque
+        # Ajoute les sprites à un groupe
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=3)   #Défini le calque de la carte
         self.group.add(self.player) # Ajoute player
         self.group.add(self.npc)    # Ajoute NPC 
         self.group.add(self.npc_2)  
         self.group.add(self.npc_3)
         self.group.add(self.npc_4)
-            
-    def handle_input(self):
+    
+    def handle_input(self, npc):
         pressed = pygame.key.get_pressed()
         # Seul player réagit aux touches car c'est le seul concerné par la fonction handle_input
         if pressed[pygame.K_z]:
@@ -63,6 +63,21 @@ class Game:
         elif pressed[pygame.K_d]:
             self.player.move_right()
             self.player.change_animation('right')
+        
+        if self.player.feet.colliderect(npc.rect):
+            
+            self.duel = True
+            self.dialog_box.start_reading(["Le combat commence contre " + npc.nom], npc.nom)
+
+            # En combat espace pour attaquer, echap pour fuir
+            if pressed[pygame.K_f]: 
+                self.player.duel(self.npc)  # Lance un combat
+                if self.npc.estMort():
+                    self.duel = False
+                    self.dialog_box.start_reading([f"{self.current_npc.nom} est mort !"])
+            elif pressed[pygame.K_ESCAPE]:
+                self.duel = False
+                self.dialog_box.start_reading(["Vous fuyez le combat !"])
     
     def update(self):
         self.group.update()
@@ -88,7 +103,7 @@ class Game:
         
         while running:
             self.player.save_location()
-            self.handle_input()
+            self.handle_input(self.npc)
             self.update()
             self.group.draw(self.screen)
             self.dialog_box.render(self.screen)

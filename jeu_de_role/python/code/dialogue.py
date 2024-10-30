@@ -18,7 +18,7 @@ class DialogBox:
             self.reading = True
             self.text_index = 0
             self.texts = dialog
-            self.npc_name = nom
+            self.npc_nom = nom
 
     def render (self, screen):  #Défini la boite de dialogue
         if self.reading:
@@ -29,8 +29,8 @@ class DialogBox:
 
             screen.blit(self.box, (130, 704))   #Défini la position de la boite de dialogue
 
-            npc_name = self.font.render(self.npc_name, False, (0, 0, 0))
-            screen.blit(npc_name, (175, 720))  # Ajuste la position pour qu'elle soit au-dessus du texte
+            npc_nom = self.font.render(self.npc_nom, False, (0, 0, 0))
+            screen.blit(npc_nom, (175, 720))  # Ajuste la position pour qu'elle soit au-dessus du texte
             
             text = self.font.render(self.texts[self.text_index][0:self.letter_index], False, (0, 0, 0))   #Défini la couleur du texte
             screen.blit(text, (175, 750))   #Défini la position du texte

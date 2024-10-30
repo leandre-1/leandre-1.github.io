@@ -85,9 +85,9 @@ class Guerrier(Personnage):
             attaque=random.randint(1, 4)
             degats=attaque*self.niveau*self.force-adversaire.niveau
             adversaire.retirerVie(degats)       #retire de la vie à l'ennemi
-            print(f"Tu as infligé {degats} de dégats à {adversaire}")
+            print(f"Tu as infligé {degats} de dégats à {adversaire.nom}")
         if adversaire.vie <= 0:
-            print(f"{adversaire} est mort")
+            print(f"{adversaire.nom} est mort")
             self.augmenterForce()       #augmente la force du guerrier si l'ennemi est mort
             self.monterExperience()     #augmente l'expérience du guerrier si l'ennemi est mort
                                         #monte si nécessaire en niveau en fonction du nombre de points xp
@@ -105,10 +105,10 @@ class Magicien(Personnage):
         if self.mana+5<=self.maxMana:
             self.mana+=5      #ajoute 5 en self.mana sans dépasser self.maxMana
 
-    def retirerMana(self, mana):
+    def retirerMana(self, mana, adversaire):
         if self.mana-mana>=0:    #retire mana à self.mana sans descendre en dessous de 0
             self.mana-=mana
-            print("Tu as lancé un sort sur {adversaire}")
+            print(f"Tu as lancé un sort sur {adversaire.nom}")
             return True     #retourne vrai si le magicien à lancé un sort
         else:
             print("Tu ne peut plus lancer de sort")
@@ -116,14 +116,14 @@ class Magicien(Personnage):
 
     def combat(self, adversaire):
         if adversaire.estVivant() and self.mana>0:  #inflige des dégats à l'ennemi si celui-ci est vivant et que le magicien dispose de mana
-            attaque = random.randint(1, 4)
-            degats = attaque*self.niveau*2-adversaire.niveau
+            attaque=random.randint(1, 4)
+            degats=attaque*self.niveau*2-adversaire.niveau
             adversaire.retirerVie(degats)   #retire de la vie à l'ennemi
             self.retirerMana(1)             #retire de la vie au méchant et diminue de 1 self.mana (consommation de magie)
-            print(f"Tu as infligé {degats} de dégats à {adversaire}")
+            print(f"Tu as infligé {degats} de dégats à {adversaire.nom}")
         
         if adversaire.estMort():
-            print(f"{adversaire} est mort")
+            print(f"{adversaire.nom} est mort")
             self.monterExperience()     #augmente l'expérience du guerrier si l'ennemi est mort
             self.augmenterMana()        #si l'ennemi est mort augmenter self.maxMana de 10 du magicien
             self.ajouterMana()
