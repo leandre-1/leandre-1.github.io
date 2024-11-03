@@ -53,16 +53,17 @@ class Personnage(pygame.sprite.Sprite):
             self.vie=self.maxVie
 
     def retirerVie(self,vie):
-        self.vie-=vie   #retire de la vie dans self.vie sans être inférieur à 0
-        if self.vie-vie<=0:
-            self.vie = self.estMort()
+        if self.vie-vie>=0:
+            self.vie-=vie   #retire de la vie dans self.vie sans être inférieur à 0
+        else:
+            self.vie=0
 
     def monterExperience(self):
         self.xp+=4          #ajoute 4 points d’expérience
         if  self.xp >=10:   #augmente d’un niveau tous les 10 xp
             self.niveau+=1
             self.xp-=10
-            print (f"Tu monte au niveau {self.niveau}")
+            print (f"{self.nom} monte au niveau {self.niveau}")
 
     def estVivant(self):
         if self.vie > 0:    #retourne vrai si le personnage est vivant
@@ -70,7 +71,7 @@ class Personnage(pygame.sprite.Sprite):
 
     def estMort(self):
         if self.vie <= 0:   #retourne vrai si le personnage est mort
-            return False
+            return True
 
 class Guerrier(Personnage):
     def __init__(self, x, y, img, nom, force, vie, xp, niveau):
@@ -85,12 +86,16 @@ class Guerrier(Personnage):
             attaque=random.randint(1, 4)
             degats=attaque*self.niveau*self.force-adversaire.niveau
             adversaire.retirerVie(degats)       #retire de la vie à l'ennemi
-            print(f"Tu as infligé {degats} de dégats à {adversaire.nom}")
-        if adversaire.vie <= 0:
-            print(f"{adversaire.nom} est mort")
+            print(f"{self.nom} a infligé {degats} dégats à {adversaire.nom}")
+            print(f"{adversaire.nom} a {adversaire.vie} vie")
+            print(" ")
+        if adversaire.estMort():
+            print(f"{adversaire.nom} est mort, {self.nom} remporte le combat")
+            print(" ")
             self.augmenterForce()       #augmente la force du guerrier si l'ennemi est mort
-            self.monterExperience()     #augmente l'expérience du guerrier si l'ennemi est mort
-                                        #monte si nécessaire en niveau en fonction du nombre de points xp
+            self.monterExperience()     #augmente l'expérience du guerrier si l'ennemi est mort     #monte si nécessaire en niveau en fonction du nombre de points xp
+            print(f"{self.nom} a {self.force} force, {self.vie} vie, {self.xp} xp, {self.niveau} niveau")
+            print(" ")
 
 class Magicien(Personnage):
     def __init__(self, x, y, img, nom, mana, vie, xp, niveau):
@@ -105,28 +110,32 @@ class Magicien(Personnage):
         if self.mana+5<=self.maxMana:
             self.mana+=5      #ajoute 5 en self.mana sans dépasser self.maxMana
 
-    def retirerMana(self, mana, adversaire):
-        if self.mana-mana>=0:    #retire mana à self.mana sans descendre en dessous de 0
-            self.mana-=mana
-            print(f"Tu as lancé un sort sur {adversaire.nom}")
+    def retirerMana(self, mana):
+        if self.mana-mana>=0:    #retire 1 de mana à self.mana sans descendre en dessous de 0
+            self.mana-=1
             return True     #retourne vrai si le magicien à lancé un sort
         else:
-            print("Tu ne peut plus lancer de sort")
+            print(f"{self.nom} ne peut plus lancer de sort")
             return False     #retourne faux si le magicien ne peut plus lancer de sort
 
     def combat(self, adversaire):
         if adversaire.estVivant() and self.mana>0:  #inflige des dégats à l'ennemi si celui-ci est vivant et que le magicien dispose de mana
             attaque=random.randint(1, 4)
-            degats=attaque*self.niveau*2-adversaire.niveau
+            degats=attaque*self.niveau-adversaire.niveau
             adversaire.retirerVie(degats)   #retire de la vie à l'ennemi
-            self.retirerMana(1)             #retire de la vie au méchant et diminue de 1 self.mana (consommation de magie)
-            print(f"Tu as infligé {degats} de dégats à {adversaire.nom}")
-        
+            print(f"Sort lancé sur {adversaire.nom}")
+            print(f"{self.nom} a infligé {degats} dégats à {adversaire.nom}")
+            print(f"{adversaire.nom} a {adversaire.vie} vie")
+            self.retirerMana(self.mana)             #diminue de 1 la mana (consommation de magie)
+            print(f"{self.nom} a {self.mana} mana")
+            print(" ")
         if adversaire.estMort():
             print(f"{adversaire.nom} est mort")
             self.monterExperience()     #augmente l'expérience du guerrier si l'ennemi est mort
             self.augmenterMana()        #si l'ennemi est mort augmenter self.maxMana de 10 du magicien
             self.ajouterMana()
+            print(f"{self.nom} : {self.mana} mana, {self.vie} vie, {self.xp} xp, {self.niveau} niveau")
+            print(" ")
 
 class NpcMagicien(Magicien):
     def __init__(self, x, y, img, nom, mana, vie, xp, niveau, dialog):
