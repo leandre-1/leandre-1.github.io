@@ -28,10 +28,12 @@ class Game:
             self.player = Guerrier(706, 199, "sprites/chevalier_d.png", 'Chevalier', 1, 10, 0, 1,)
         
         #Generer les NPC
-        self.npc = NpcGuerrier(179, 145, "sprites/bouliste_petit.png", 'Bouliste', 1, 10, 0, 1, ["Bouuliste !", "Boboy"])
-        self.npc_2 = NpcGuerrier(643, 550, "sprites/chevalier_ennemi_d.png", 'Le Laitier', 1, 10, 0, 1, ["Je suis le laitier", "Mon lait est délicieux"])
-        self.npc_3 = NpcMagicien(223, 410, "sprites/petit_gandalf.png", 'Gandalf', 5, 10, 0, 1,["Vous ne passerez pas !", "Fuyez, pauvres fous !"])
-        self.npc_4 = NpcMagicien(863, 550, "sprites/golem_petit.png", 'Golem', 5, 10, 0, 1,["aaaaa", "..."])
+        self.npcs = [
+        NpcGuerrier(179, 145, "sprites/bouliste_petit.png", 'Bouliste', 1, 10, 0, 1, ["Bouuliste !", "Boboy"]),
+        NpcGuerrier(643, 550, "sprites/chevalier_ennemi_d.png", 'Le Laitier', 1, 10, 0, 1, ["Je suis le laitier", "Mon lait est délicieux"]),
+        NpcMagicien(223, 410, "sprites/petit_gandalf.png", 'Gandalf', 5, 10, 0, 1,["Vous ne passerez pas !", "Fuyez, pauvres fous !"]),
+        NpcMagicien(865, 550, "sprites/golem_petit.png", 'Golem', 5, 10, 0, 1,["aaaaa", "..."])
+        ]
 
         self.dialog_box = DialogBox(self.screen, pygame.font.Font(None, 24))    #Défini la boite de dialogue
 
@@ -45,11 +47,9 @@ class Game:
         # Ajoute les sprites à un groupe
         self.group = pyscroll.PyscrollGroup(map_layer=map_layer, default_layer=3)   #Défini le calque de la carte
         self.group.add(self.player) # Ajoute player
-        self.group.add(self.npc)    # Ajoute NPC 
-        self.group.add(self.npc_2)  
-        self.group.add(self.npc_3)
-        self.group.add(self.npc_4)
-
+        for npc in self.npcs:
+            self.group.add(npc)
+    
     def handle_input(self):
         pressed = pygame.key.get_pressed()
         # Seul player réagit aux touches car c'est le seul concerné par la fonction handle_input
@@ -69,33 +69,31 @@ class Game:
 
     def duel(self):
         pressed = pygame.key.get_pressed()
-        if self.player.feet.colliderect(self.npc.rect) and pressed[pygame.K_f]:   
-            self.dialog_box.start_reading(["Le combat commence contre " + self.npc.nom],self.npc.nom)
-            while self.player.estVivant() and self.npc.estVivant():
-                self.player.combat(self.npc)
-                if self.npc.estVivant() and self.player.estVivant():  
-                    self.npc.combat(self.player)
-            if self.player.estMort():
-                print(f"Tu as été tué par {self.npc.nom}, tu es mort")
-                pygame.quit()
-                exit()
+        for npc in self.npcs:
+            if self.player.feet.colliderect(npc.rect) and pressed[pygame.K_f] and npc.estVivant():   
+                self.dialog_box.start_reading(["Le combat commence contre " + npc.nom],npc.nom)
+                while self.player.estVivant() and npc.estVivant():
+                    self.player.combat(npc)
+                    if npc.estVivant() and self.player.estVivant():  
+                        npc.combat(self.player)
+                if self.player.estMort():
+                    print(f"Tu as été tué par {npc.nom}, tu es mort")
+                    print("Fin du jeu")
+                    print(" ")
+                    pygame.quit()
+                    exit()
     
     def update(self):
         self.group.update()
         #vérification de la collision
         for sprite in self.group.sprites():  
             if sprite.feet.collidelist(self.walls) > -1:    #Si le joueur touche un mur
-                sprite.move_back()  #Le joueur recule
+                sprite.move_back()
 
     def check_npc_collision(self, dialog_box):
-        if self.player.feet.colliderect(self.npc.rect) and self.npc.estVivant():
-            dialog_box.start_reading(self.npc.dialog, self.npc.nom)
-        elif self.player.feet.colliderect(self.npc_2.rect) and self.npc_2.estVivant():
-            dialog_box.start_reading(self.npc_2.dialog, self.npc_2.nom)
-        elif self.player.feet.colliderect(self.npc_3.rect) and self.npc_3.estVivant():
-            dialog_box.start_reading(self.npc_3.dialog, self.npc_3.nom)
-        elif self.player.feet.colliderect(self.npc_4.rect) and self.npc_4.estVivant():
-            dialog_box.start_reading(self.npc_4.dialog, self.npc_4.nom)
+        for npc in self.npcs:
+            if self.player.feet.colliderect(npc.rect) and npc.estVivant():
+                dialog_box.start_reading(npc.dialog, npc.nom)
 
     #Boucle de jeu
     def run(self):
