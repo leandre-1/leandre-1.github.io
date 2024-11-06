@@ -25,7 +25,7 @@ class Game:
             self.player = Magicien(706, 199, "sprites/chevalier_d.png", 'Magicien', 5, 10, 0, 1)
         else:
             print("Classe inconnue, choix par défaut : Guerrier")
-            self.player = Guerrier(706, 199, "sprites/chevalier_d.png", 'Chevalier', 1, 10, 0, 1,)
+            self.player = Guerrier(706, 199, "sprites/chevalier_d.png", 'Chevalier', 5, 10, 0, 1,)
         
         #Generer les NPC
         self.npcs = [
@@ -79,10 +79,13 @@ class Game:
                             self.player.combat(npc)
                             if npc.estVivant() and self.player.estVivant():  
                                 npc.combat(self.player)
-                    if npc.estMort() and npc.feet.colliderect(self.player.rect):
-                        self.dialog_box.start_reading(["Tu as tué " + npc.nom],npc.nom)
+                    if npc.estMort() and event.key == pygame.K_f:
+                        self.dialog_box.start_reading(["Tu as tué " + npc.nom],"Victoire !")
                         self.group.remove(npc)
-    
+                    if self.player.estMort():
+                        self.dialog_box.start_reading(["Tu es mort !"], "Game Over")
+                        self.group.remove(self.player)
+                            
     def update(self):
         self.group.update()
         #vérification de la collision
@@ -92,7 +95,7 @@ class Game:
 
     def check_npc_collision(self, dialog_box):
         for npc in self.npcs:
-            if self.player.feet.colliderect(npc.rect) and npc.estVivant():
+            if self.player.feet.colliderect(npc.rect) and self.player.estVivant() and npc.estVivant():
                 dialog_box.start_reading(npc.dialog, npc.nom)
 
     #Boucle de jeu
@@ -108,7 +111,6 @@ class Game:
             self.group.draw(self.screen)
             self.dialog_box.render(self.screen)
             pygame.display.flip()
-            
             clock.tick(60)
 
         pygame.quit()
