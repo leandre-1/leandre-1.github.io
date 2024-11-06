@@ -10,7 +10,7 @@ HAUTEUR = 22  # hauteur du niveau
 class Game:
     def __init__(self):
         self.screen = pygame.display.set_mode((LARGEUR * TITLE_SIZE, (HAUTEUR + 3) * TITLE_SIZE))   #Défini la taille de la fenêtre
-        pygame.display.set_caption("Dungeon")   #Défini le titre de la fenêtre
+        pygame.display.set_caption("Donjon")   #Défini le titre de la fenêtre
 
         #Charger la carte
         tmx_data = pytmx.util_pygame.load_pygame("carte/carte.tmx")
@@ -67,21 +67,21 @@ class Game:
             pygame.quit()
             exit()            
 
-    def duel(self):
-        pressed = pygame.key.get_pressed()
-        for npc in self.npcs:
-            if self.player.feet.colliderect(npc.rect) and pressed[pygame.K_f] and npc.estVivant():   
-                self.dialog_box.start_reading(["Le combat commence contre " + npc.nom],npc.nom)
-                while self.player.estVivant() and npc.estVivant():
-                    self.player.combat(npc)
-                    if npc.estVivant() and self.player.estVivant():  
-                        npc.combat(self.player)
-                if self.player.estMort():
-                    print(f"Tu as été tué par {npc.nom}, tu es mort")
-                    print("Fin du jeu")
-                    print(" ")
-                    pygame.quit()
-                    exit()
+    def interactions(self):
+        for event in pygame.event.get():
+            if event.type == pygame.KEYDOWN:  #Si une touche est appuyée
+                if event.key == pygame.K_SPACE:
+                        self.check_npc_collision(self.dialog_box)
+                for npc in self.npcs:
+                    if self.player.feet.colliderect(npc.rect) and event.key == pygame.K_f and npc.estVivant():   
+                        self.dialog_box.start_reading(["Le combat commence contre " + npc.nom],npc.nom)
+                        while self.player.estVivant() and npc.estVivant():
+                            self.player.combat(npc)
+                            if npc.estVivant() and self.player.estVivant():  
+                                npc.combat(self.player)
+                    if npc.estMort() and npc.feet.colliderect(self.player.rect):
+                        self.dialog_box.start_reading(["Tu as tué " + npc.nom],npc.nom)
+                        self.group.remove(npc)
     
     def update(self):
         self.group.update()
@@ -103,19 +103,11 @@ class Game:
         while running:
             self.player.save_location()
             self.handle_input()
-            self.duel()
+            self.interactions()
             self.update()
             self.group.draw(self.screen)
             self.dialog_box.render(self.screen)
             pygame.display.flip()
-            
-            for event in pygame.event.get():
-                if event.type == pygame.QUIT:
-                    running = False
-                
-                elif event.type == pygame.KEYDOWN:  #Si une touche est appuyée
-                    if event.key == pygame.K_SPACE:
-                        self.check_npc_collision(self.dialog_box)
             
             clock.tick(60)
 
