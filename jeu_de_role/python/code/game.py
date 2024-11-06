@@ -25,7 +25,7 @@ class Game:
             self.player = Magicien(706, 199, "sprites/chevalier_d.png", 'Magicien', 5, 10, 0, 1)
         else:
             print("Classe inconnue, choix par défaut : Guerrier")
-            self.player = Guerrier(706, 199, "sprites/chevalier_d.png", 'Chevalier', 5, 10, 0, 1,)
+            self.player = Guerrier(706, 199, "sprites/chevalier_d.png", 'Chevalier', 1, 10, 0, 1,)
         
         #Generer les NPC
         self.npcs = [
@@ -79,8 +79,7 @@ class Game:
                             self.player.combat(npc)
                             if npc.estVivant() and self.player.estVivant():  
                                 npc.combat(self.player)
-                    if npc.estMort() and event.key == pygame.K_f:
-                        self.dialog_box.start_reading(["Tu as tué " + npc.nom],"Victoire !")
+                    if npc.estMort() and event.key:
                         self.group.remove(npc)
                     if self.player.estMort():
                         self.dialog_box.start_reading(["Tu es mort !"], "Game Over")
