@@ -129,6 +129,11 @@ class Magicien(Personnage):
             self.retirerMana(self.mana)             #diminue de 1 la mana (consommation de magie)
             print(f"{self.nom} a {self.mana} mana")
             print(" ")
+        if self.mana==0:
+            print(f"{self.nom} n'a plus de mana")
+            print(" ")
+            pygame.quit()
+            exit()
         if adversaire.estMort():
             print(f"{adversaire.nom} est mort")
             self.monterExperience()     #augmente l'expérience du guerrier si l'ennemi est mort
